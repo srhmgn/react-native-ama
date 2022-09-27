@@ -11,8 +11,8 @@ import { getRuleAction } from '../logger';
 export const checkMinimumSize = (
   event: LayoutChangeEvent,
 ): LogParams | null => {
-  const width = event.nativeEvent.layout.width;
-  const height = event.nativeEvent.layout.height;
+  const width = Math.round(event.nativeEvent.layout.width);
+  const height = Math.round(event.nativeEvent.layout.height);
   const shouldForgive = getRuleAction?.('MINIMUM_SIZE') === 'PLEASE_FORGIVE_ME';
 
   if (
@@ -30,9 +30,7 @@ export const checkMinimumSize = (
   if (width < MINIMUM_TOUCHABLE_SIZE || height < MINIMUM_TOUCHABLE_SIZE) {
     return {
       rule: 'MINIMUM_SIZE',
-      message: `The touchable area must have a minimum size of ${MINIMUM_TOUCHABLE_SIZE}x${MINIMUM_TOUCHABLE_SIZE} found instead: ${width.toFixed(
-        0,
-      )}x${height.toFixed(0)}`,
+      message: `The touchable area must have a minimum size of ${MINIMUM_TOUCHABLE_SIZE}x${MINIMUM_TOUCHABLE_SIZE} found instead: ${width}x${height}`,
     };
   }
 
